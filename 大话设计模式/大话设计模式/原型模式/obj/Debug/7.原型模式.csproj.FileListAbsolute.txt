@@ -1,0 +1,6 @@
+E:\code\电子书\Notes\大话设计模式\大话设计模式\原型模式\bin\Debug\原型模式.exe.config
+E:\code\电子书\Notes\大话设计模式\大话设计模式\原型模式\bin\Debug\原型模式.exe
+E:\code\电子书\Notes\大话设计模式\大话设计模式\原型模式\bin\Debug\原型模式.pdb
+E:\code\电子书\Notes\大话设计模式\大话设计模式\原型模式\obj\Debug\7.原型模式.csprojResolveAssemblyReference.cache
+E:\code\电子书\Notes\大话设计模式\大话设计模式\原型模式\obj\Debug\原型模式.exe
+E:\code\电子书\Notes\大话设计模式\大话设计模式\原型模式\obj\Debug\原型模式.pdb

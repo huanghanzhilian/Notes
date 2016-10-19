@@ -1,0 +1,1 @@
+E:\code\电子书\Notes\大话设计模式\大话设计模式\简单工厂模式\bin\Debug\简单工厂模式.exe.config

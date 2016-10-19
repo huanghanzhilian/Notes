@@ -1,0 +1,6 @@
+E:\code\电子书\Notes\大话设计模式\大话设计模式\单一职责原则\bin\Debug\单一职责原则.exe.config
+E:\code\电子书\Notes\大话设计模式\大话设计模式\单一职责原则\bin\Debug\单一职责原则.exe
+E:\code\电子书\Notes\大话设计模式\大话设计模式\单一职责原则\bin\Debug\单一职责原则.pdb
+E:\code\电子书\Notes\大话设计模式\大话设计模式\单一职责原则\obj\Debug\3.软件设计的一些原则.csprojResolveAssemblyReference.cache
+E:\code\电子书\Notes\大话设计模式\大话设计模式\单一职责原则\obj\Debug\单一职责原则.exe
+E:\code\电子书\Notes\大话设计模式\大话设计模式\单一职责原则\obj\Debug\单一职责原则.pdb

@@ -1,0 +1,5 @@
+E:\code\电子书\Notes\大话设计模式\大话设计模式\外观模式\bin\Debug\外观模式.exe.config
+E:\code\电子书\Notes\大话设计模式\大话设计模式\外观模式\bin\Debug\外观模式.exe
+E:\code\电子书\Notes\大话设计模式\大话设计模式\外观模式\bin\Debug\外观模式.pdb
+E:\code\电子书\Notes\大话设计模式\大话设计模式\外观模式\obj\Debug\外观模式.exe
+E:\code\电子书\Notes\大话设计模式\大话设计模式\外观模式\obj\Debug\外观模式.pdb

@@ -1,0 +1,6 @@
+E:\code\电子书\Notes\大话设计模式\大话设计模式\建造者模式\bin\Debug\建造者模式.exe.config
+E:\code\电子书\Notes\大话设计模式\大话设计模式\建造者模式\bin\Debug\建造者模式.exe
+E:\code\电子书\Notes\大话设计模式\大话设计模式\建造者模式\bin\Debug\建造者模式.pdb
+E:\code\电子书\Notes\大话设计模式\大话设计模式\建造者模式\obj\Debug\10.建造者模式.csprojResolveAssemblyReference.cache
+E:\code\电子书\Notes\大话设计模式\大话设计模式\建造者模式\obj\Debug\建造者模式.exe
+E:\code\电子书\Notes\大话设计模式\大话设计模式\建造者模式\obj\Debug\建造者模式.pdb
