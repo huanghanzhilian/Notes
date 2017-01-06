@@ -85,8 +85,175 @@
 	<h3>同时使用Transitions和Animations</h3>
 	<p>Vue 为了知道过渡的完成，必须设置相应的事件监听器。它可以是 transitionend 或 animationend ，这取决于给元素应用的 CSS 规则。如果你使用其中任何一种，Vue 能自动识别类型并设置监听。</p>
 	<p>但是，在一些场景中，你需要给同一个元素同时设置两种过渡动效，比如 animation 很快的被触发并完成了，而 transition 效果还没结束。在这种情况中，你就需要使用 type 特性并设置 animation 或 transition 来明确声明你需要 Vue 监听的类型。</p>
+	<h3>JavaScript钩子</h3>
+	<textarea rows="20" cols="80">
+&lttransition
+	v-on:before-enter="beforeEnter"
+	v-on:enter="enter"
+	v-on:after-enter="afterEnter"
+	v-on:enter-cancelled="enterCancelled"
+	v-on:before-leave="beforeLeave"
+	v-on:leave="leave"
+	v-on:after-leave="afterLeave"
+	v-on:leave-cancelled="leaveCancelled"
+&gt
+&lt!-- ... --&gt
+&lt/transition&gt
+
+
+// ...
+methods: {
+  // --------
+  // 进入中
+  // --------
+  beforeEnter: function (el) {
+    // ...
+  },
+  // 此回调函数是可选项的设置
+  // 与 CSS 结合时使用
+  enter: function (el, done) {
+    // ...
+    done()
+  },
+  afterEnter: function (el) {
+    // ...
+  },
+  enterCancelled: function (el) {
+    // ...
+  },
+  // --------
+  // 离开时
+  // --------
+  beforeLeave: function (el) {
+    // ...
+  },
+  // 此回调函数是可选项的设置
+  // 与 CSS 结合时使用
+  leave: function (el, done) {
+    // ...
+    done()
+  },
+  afterLeave: function (el) {
+    // ...
+  },
+  // leaveCancelled 只用于 v-show 中
+  leaveCancelled: function (el) {
+    // ...
+  }
+}
+	</textarea>
+	<p>这些钩子函数可以结合 CSS transitions/animations 使用，也可以单独使用。</p>
+	<p>当只用 JavaScript 过渡的时候， 在 enter 和 leave 中，回调函数 done 是必须的 。 否则，它们会被同步调用，过渡会立即完成。</p>
+	<p>推荐对于仅使用 JavaScript 过渡的元素添加 v-bind:css="false"，Vue 会跳过 CSS 的检测。这也可以避免过渡过程中 CSS 的影响。</p>
+	<h3>一个使用Velocity.js的案例</h3>
+	<div id="demo5">
+		<button @click="show=!show">Toggle</button>
+		<transition
+			v-on:before-enter="beforeEnter"
+			v-on:enter="enter"
+			v-on:leave="leave"
+			v-bind:css="false"
+		>
+			<p v-if="show">Demo</p>
+		</transition>
+	</div>
+	<h2>初始渲染的过渡</h2>
+	<hr>
+	<p>可以通过appear特性设置节点的初始渲染的过渡</p>
+	<textarea name="" id="" cols="80" rows="10">
+<transition
+  appear
+  appear-class="custom-appear-class"
+  appear-active-class="custom-appear-active-class"
+>
+  <!-- ... -->
+</transition>
+	</textarea>
+	<p>自定义JavaScript钩子</p>
+	<textarea name="" id="" cols="80" rows="10">
+<transition
+  appear
+  v-on:before-appear="customBeforeAppearHook"
+  v-on:appear="customAppearHook"
+  v-on:after-appear="customAfterAppearHook"
+>
+  <!-- ... -->
+</transition>
+	</textarea>
+
+	<h2>多个元素过渡</h2>
+	<hr>
+	<p>当有相同标签名的元素切换时，需要通过 key 特性设置唯一的值来标记以让 Vue 区分它们，否则 Vue 为了效率只会替换相同标签内部的内容。即使在技术上没有必要，给在 &lttransition&gt 组件中的多个元素设置 key 是一个更好的实践。</p>
+	<textarea name="" id="" cols="80" rows="30">
+<transition>
+  <button v-if="isEditing" key="save">
+    Save
+  </button>
+  <button v-else key="edit">
+    Edit
+  </button>
+</transition>
+可以给通过同一个元素的key特性设置不同的状态来代替v-if和v-else，可重写为
+<transition>
+  <button v-bind:key="isEditing">
+    {{ isEditing ? 'Save' : 'Edit' }}
+  </button>
+</transition>
+使用多个 v-if 的多个元素的过渡可以重写为绑定了动态属性的单个元素过渡。
+<transition>
+  <button v-if="docState === 'saved'" key="saved">
+    Edit
+  </button>
+  <button v-if="docState === 'edited'" key="edited">
+    Save
+  </button>
+  <button v-if="docState === 'editing'" key="editing">
+    Cancel
+  </button>
+</transition>
+重写为
+<transition>
+  <button v-bind:key="docState">
+    {{ buttonMessage }}
+  </button>
+</transition>
+<script type="text/javascript">
+	// ...
+computed: {
+  buttonMessage: function () {
+    switch (docState) {
+      case 'saved': return 'Edit'
+      case 'edited': return 'Save'
+      case 'editing': return 'Cancel'
+    }
+  }
+}
+</script>
+	</textarea>
+	<h3>过渡模式</h3>
+	<p>&lttransition&gt中当前元素的离开过渡和新元素的进入过渡是同时发生的，这不能满足所有的要求，Vue提供了过渡模式</p>
+	<dl>
+		<dt>in-out:</dt>
+		<dd>新元素先进行过渡，完成之后当前元素过渡离开</dd>
+		<dt>out-in：</dt>
+		<dd>当前元素先进行过渡，完成之后新元素过渡进入</dd>
+	</dl>	
+	<textarea name="" id="" cols="80" rows="10">
+<transition name="fade" mode="out-in">
+  <!-- ... the buttons ... -->
+</transition>
+	</textarea>
+	<p>多个组件的过渡很简单很多 - 我们不需要使用 key 特性。相反，我们只需要使用动态组件:</p>
+	<div id="demo6">
+	<input v-model="view" type="radio" value="v-a" id="a" name="view"><label for="a">A</label>
+  	<input v-model="view" type="radio" value="v-b" id="b" name="view"><label for="b">B</label>
+		<transition name="component-fade" mode="out-in">
+			<component :is="view"></component>
+		</transition>
+	</div>
 </body>
 <script type="text/javascript" src="Scripts/vue.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.min.js"></script>
 <link href="https://unpkg.com/animate.css@3.5.1/animate.min.css" rel="stylesheet" type="text/css">
 <script>
 	var vm1=new Vue({
@@ -104,7 +271,48 @@
 		data:{show:true}
 	})
 
-	var vm4=new Vue({el:"#demo4",data:{show:true}})
+	var vm4=new Vue({el:"#demo4",data:{show:true}});
+
+	var vm5=new Vue({
+		el:"#demo5",
+		data:{show:true},
+		methods:{
+			beforeEnter:function(el){
+				el.style.opacity = 0
+				el.style.transformOrigin='left'
+			},
+			enter:function(el,done){
+				Velocity(el,{opacity:1,fontSize:'1.4em'},{duration:300})
+			},
+			leave:function(el,done){
+				Velocity(el,{translateX:'15px',rotateZ:'50deg'},{duration:600})
+				Velocity(el,{rotateZ:'100deg'},{loop:2})
+				Velocity(el,{
+					rotateZ:'45deg',
+					translateX:'30px',
+					translateY:'30px',
+					opacity:0
+				},{
+					complete:done
+				})
+			}
+		}
+	});
+
+	var vm6=new Vue({
+		el:"#demo6",
+		data:{
+			view:'v-a'
+		},
+		components:{
+			'v-a':{
+				template:'<div>Component A</div>'
+			},
+			'v-b':{
+				template:'<div>Component B</div>'
+			}
+		}
+	})
 </script>
 <style type="text/css">
 	.fade-enter-active,.fade-leave-active{
@@ -152,6 +360,13 @@
 		100% {
 			transform: scale(0);
 		}
+	}
+
+	.component-fade-enter-active, .component-fade-leave-active {
+		transition: opacity .3s ease;
+	}
+	.component-fade-enter, .component-fade-leave-active {
+		opacity: 0;
 	}
 </style>
 </html>
