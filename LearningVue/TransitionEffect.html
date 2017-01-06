@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>	
+</head>
+<body>
+	<h1>过渡效果</h1>
+	<h2>概述</h2>
+	<hr>
+	<p>Vue 在插入、更新或者移除 DOM 时，提供多种不同方式的应用过渡效果。包括以下工具：</p>
+	<ul>
+		<li>在 CSS 过渡和动画中自动应用 class</li>
+		<li>可以配合使用第三方 CSS 动画库，如 Animate.css</li>
+		<li>在过渡钩子函数中使用 JavaScript 直接操作 DOM</li>
+		<li>可以配合使用第三方 JavaScript 动画库，如 Velocity.js</li>
+	</ul>
+	<h2>单元素/组件的过渡</h2>
+	<hr>
+	<p>Vue 提供了 transition 的封装组件，在下列情形中，可以给任何元素和组件添加 entering/leaving 过渡</p>
+	<ul>
+		<li>条件渲染 （使用 v-if）</li>
+		<li>条件展示 （使用 v-show）</li>
+		<li>动态组件</li>
+		<li>组件根节点</li>
+	</ul>
+	<div id="demo">
+		<button @click="show=!show">Toggle</button>
+		<transition name="fade">
+			<p v-if="show">hello</p>
+		</transition>
+	</div>
+	<p>元素封装成过渡组件之后，在遇到插入或删除时，Vue 将</p>
+	<ol>
+		<li>自动嗅探目标元素是否有 CSS 过渡或动画，并在合适时添加/删除 CSS 类名。</li>
+		<li>如果过渡组件设置了过渡的 JavaScript 钩子函数，会在相应的阶段调用钩子函数。</li>
+		<li>如果没有找到 JavaScript 钩子并且也没有检测到 CSS 过渡/动画，DOM 操作（插入/删除）在下一帧中立即执行。(注意：此指浏览器逐帧动画机制，与 Vue，和Vue的 nextTick 概念不同)</li>
+	</ol>
+	<h3>过渡的CSS类名</h3>
+	<p>会有 4 个(CSS)类名在 enter/leave 的过渡中切换</p>
+	<ol>
+		<li><span>v-enter</span>: 定义进入过渡的开始状态。在元素被插入时生效，在下一个帧移除。</li>
+		<li><span>v-enter-active</span>:定义进入过渡的结束状态。在元素被插入时生效，在<span>transition/animation</span>完成之后移除。</li>
+		<li><span>v-leave</span>定义离开过渡的开始状态。在离开过渡被触发时生效，在下一个帧移除。</li>
+		<li><span>v-leave-active</span>: 定义离开过渡的结束状态。在离开过渡被触发时生效，在<span>transition/animation</span>完成之后移除。</li>
+	</ol>
+	<p>这些在
+		<span>enter/leave</span>过渡中切换的类名，
+		<span>v-</span>是这些类名的前缀。使用
+		<span><transition name="my-transition"></span>可以重置前缀，比如
+		<span>v-enter</span>替换为
+		<span>my-transition-enter</span>。
+		<span>v-enter-active</span>和
+		<span>v-leave-active</span>可以控制进入/离开过渡的不同阶段。
+	</p>
+	<h3>CSS过渡</h3>
+	<div id="demo2">
+		<button @click="show=!show">Toggle render</button>
+		<transition name="slide-fade">
+			<p v-if="show">hello</p>
+		</transition>
+	</div>
+	<h3>CSS动画</h3>
+	<p>CSS 动画用法同 CSS 过渡，区别是在动画中 v-enter 类名在节点插入 DOM 后不会立即删除，而是在 animationend 事件触发时删除。</p>
+	<div id="demo3">
+		<button @click="show=!show">Toggle Show</button>
+		<transition name="bounce">
+			<p v-if="show">look at me</p>
+		</transition>
+	</div>
+	<h3>自定义过渡类名</h3>
+	<p>我们可以通过以下特性来自定义过渡类名</p>
+	<ul>
+		<li>enter-class</li>
+		<li>enter-active-class</li>
+		<li>leave-class</li>
+		<li>leave-active-class</li>
+	</ul>
+	<div id="demo4">
+		<button @click="show=!show">Toggle render</button>
+		<transition name="custom-classes-transition" enter-active-class="animated tada" leave-active-class="animated bounceOutRight">
+			<p v-if="show">hello</p>
+		</transition>
+	</div>
+	<h3>同时使用Transitions和Animations</h3>
+	<p>Vue 为了知道过渡的完成，必须设置相应的事件监听器。它可以是 transitionend 或 animationend ，这取决于给元素应用的 CSS 规则。如果你使用其中任何一种，Vue 能自动识别类型并设置监听。</p>
+	<p>但是，在一些场景中，你需要给同一个元素同时设置两种过渡动效，比如 animation 很快的被触发并完成了，而 transition 效果还没结束。在这种情况中，你就需要使用 type 特性并设置 animation 或 transition 来明确声明你需要 Vue 监听的类型。</p>
+</body>
+<script type="text/javascript" src="Scripts/vue.js"></script>
+<link href="https://unpkg.com/animate.css@3.5.1/animate.min.css" rel="stylesheet" type="text/css">
+<script>
+	var vm1=new Vue({
+		el:"#demo",
+		data:{show:true}
+	})
+
+	var vm2=new Vue({
+		el:"#demo2",
+		data:{show:true}
+	})
+
+	var vm3=new Vue({
+		el:"#demo3",
+		data:{show:true}
+	})
+
+	var vm4=new Vue({el:"#demo4",data:{show:true}})
+</script>
+<style type="text/css">
+	.fade-enter-active,.fade-leave-active{
+		transition: opacity .5s
+	}
+	.fade-enter,.fade-leave-active{
+		opacity: 0
+	}
+	
+	.slide-fade-enter-active{
+		transition: all .3s ease;
+	}
+	.slide-fade-leave-active{
+		transition: all .8s cubic-bezier(1.0,0.5,0.8,1.0);
+	}
+	.slide-fade-enter,.slide-fade-leave-active{
+		transform: translateX(10px);
+		opacity: 0;
+	}
+
+	.bounce-enter-active{
+		animation: bounce-in .5s;
+	}
+	.bounce-leave-active{
+		animation: bounce-out .5s;
+	}
+	@keyframes bounce-in{
+		0% {
+			transform: scale(0);
+		}
+		50% {
+			transform: scale(1.5);
+		}
+		100% {
+			transform: scale(1);
+		}
+	}
+	@keyframes bounce-out{
+		0% {
+			transform: scale(1);
+		}
+		50% {
+			transform: scale(1.5);
+		}
+		100% {
+			transform: scale(0);
+		}
+	}
+</style>
+</html>
