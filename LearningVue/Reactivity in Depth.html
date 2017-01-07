@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div id="div1">
+		<p>{{ message }}</p>
+	</div>
+</body>
+<script type="text/javascript" src="Scripts/vue.js"></script>
+<script>
+	var vm1=new Vue({
+		el:'#div1',
+		data:{
+			message:'123'
+		},
+		methods: {
+    updateMessage: function () {
+      this.message = 'updated'
+      console.log(this.$el.textContent) // => '没有更新'
+      this.$nextTick(function () {
+        console.log(this.$el.textContent) // => '更新完成'
+      })
+    }
+  }
+	});
+</script>
+</html>
