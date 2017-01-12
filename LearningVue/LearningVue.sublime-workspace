@@ -4,20 +4,60 @@
 		"selected_items":
 		[
 			[
+				"computed",
+				"computedList"
+			],
+			[
+				"item",
+				"items"
+			],
+			[
+				"tran",
+				"translateY()"
+			],
+			[
+				"ma",
+				"margin-right"
+			],
+			[
+				"inline",
+				"inline-block"
+			],
+			[
+				"random",
+				"randomIndex"
+			],
+			[
+				"rand",
+				"randomIndex"
+			],
+			[
+				"ro",
+				"rotateZ"
+			],
+			[
+				"velo",
+				"Velocity"
+			],
+			[
+				"vol",
+				"Velocity"
+			],
+			[
+				"tr",
+				"transform"
+			],
+			[
+				"be",
+				"beforeEnter"
+			],
+			[
 				"demo",
 				"demo4"
 			],
 			[
-				"tran",
-				"transform"
-			],
-			[
 				"op",
 				"opacity"
-			],
-			[
-				"tr",
-				"transition"
 			],
 			[
 				"incr",
@@ -126,10 +166,13 @@
 			}
 		},
 		{
+			"contents": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n\t<meta charset=\"UTF-8\">\n\t<title>Document</title>\t\n</head>\n<body>\n\t<h1>过渡效果</h1>\n\t<h2>概述</h2>\n\t<hr>\n\t<p>Vue 在插入、更新或者移除 DOM 时，提供多种不同方式的应用过渡效果。包括以下工具：</p>\n\t<ul>\n\t\t<li>在 CSS 过渡和动画中自动应用 class</li>\n\t\t<li>可以配合使用第三方 CSS 动画库，如 Animate.css</li>\n\t\t<li>在过渡钩子函数中使用 JavaScript 直接操作 DOM</li>\n\t\t<li>可以配合使用第三方 JavaScript 动画库，如 Velocity.js</li>\n\t</ul>\n\t<h2>单元素/组件的过渡</h2>\n\t<hr>\n\t<p>Vue 提供了 transition 的封装组件，在下列情形中，可以给任何元素和组件添加 entering/leaving 过渡</p>\n\t<ul>\n\t\t<li>条件渲染 （使用 v-if）</li>\n\t\t<li>条件展示 （使用 v-show）</li>\n\t\t<li>动态组件</li>\n\t\t<li>组件根节点</li>\n\t</ul>\n\t<div id=\"demo\">\n\t\t<button @click=\"show=!show\">Toggle</button>\n\t\t<transition name=\"fade\">\n\t\t\t<p v-if=\"show\">hello</p>\n\t\t</transition>\n\t</div>\n\t<p>元素封装成过渡组件之后，在遇到插入或删除时，Vue 将</p>\n\t<ol>\n\t\t<li>自动嗅探目标元素是否有 CSS 过渡或动画，并在合适时添加/删除 CSS 类名。</li>\n\t\t<li>如果过渡组件设置了过渡的 JavaScript 钩子函数，会在相应的阶段调用钩子函数。</li>\n\t\t<li>如果没有找到 JavaScript 钩子并且也没有检测到 CSS 过渡/动画，DOM 操作（插入/删除）在下一帧中立即执行。(注意：此指浏览器逐帧动画机制，与 Vue，和Vue的 nextTick 概念不同)</li>\n\t</ol>\n\t<h3>过渡的CSS类名</h3>\n\t<p>会有 4 个(CSS)类名在 enter/leave 的过渡中切换</p>\n\t<ol>\n\t\t<li><span>v-enter</span>: 定义进入过渡的开始状态。在元素被插入时生效，在下一个帧移除。</li>\n\t\t<li><span>v-enter-active</span>:定义进入过渡的结束状态。在元素被插入时生效，在<span>transition/animation</span>完成之后移除。</li>\n\t\t<li><span>v-leave</span>定义离开过渡的开始状态。在离开过渡被触发时生效，在下一个帧移除。</li>\n\t\t<li><span>v-leave-active</span>: 定义离开过渡的结束状态。在离开过渡被触发时生效，在<span>transition/animation</span>完成之后移除。</li>\n\t</ol>\n\t<p>这些在\n\t\t<span>enter/leave</span>过渡中切换的类名，\n\t\t<span>v-</span>是这些类名的前缀。使用\n\t\t<span><transition name=\"my-transition\"></span>可以重置前缀，比如\n\t\t<span>v-enter</span>替换为\n\t\t<span>my-transition-enter</span>。\n\t\t<span>v-enter-active</span>和\n\t\t<span>v-leave-active</span>可以控制进入/离开过渡的不同阶段。\n\t</p>\n\t<h3>CSS过渡</h3>\n\t<div id=\"demo2\">\n\t\t<button @click=\"show=!show\">Toggle render</button>\n\t\t<transition name=\"slide-fade\">\n\t\t\t<p v-if=\"show\">hello</p>\n\t\t</transition>\n\t</div>\n\t<h3>CSS动画</h3>\n\t<p>CSS 动画用法同 CSS 过渡，区别是在动画中 v-enter 类名在节点插入 DOM 后不会立即删除，而是在 animationend 事件触发时删除。</p>\n\t<div id=\"demo3\">\n\t\t<button @click=\"show=!show\">Toggle Show</button>\n\t\t<transition name=\"bounce\">\n\t\t\t<p v-if=\"show\">look at me</p>\n\t\t</transition>\n\t</div>\n\t<h3>自定义过渡类名</h3>\n\t<p>我们可以通过以下特性来自定义过渡类名</p>\n\t<ul>\n\t\t<li>enter-class</li>\n\t\t<li>enter-active-class</li>\n\t\t<li>leave-class</li>\n\t\t<li>leave-active-class</li>\n\t</ul>\n\t<div id=\"demo4\">\n\t\t<button @click=\"show=!show\">Toggle render</button>\n\t\t<transition name=\"custom-classes-transition\" enter-active-class=\"animated tada\" leave-active-class=\"animated bounceOutRight\">\n\t\t\t<p v-if=\"show\">hello</p>\n\t\t</transition>\n\t</div>\n\t<h3>同时使用Transitions和Animations</h3>\n\t<p>Vue 为了知道过渡的完成，必须设置相应的事件监听器。它可以是 transitionend 或 animationend ，这取决于给元素应用的 CSS 规则。如果你使用其中任何一种，Vue 能自动识别类型并设置监听。</p>\n\t<p>但是，在一些场景中，你需要给同一个元素同时设置两种过渡动效，比如 animation 很快的被触发并完成了，而 transition 效果还没结束。在这种情况中，你就需要使用 type 特性并设置 animation 或 transition 来明确声明你需要 Vue 监听的类型。</p>\n\t<h3>JavaScript钩子</h3>\n\t<textarea rows=\"20\" cols=\"80\">\n&lttransition\n\tv-on:before-enter=\"beforeEnter\"\n\tv-on:enter=\"enter\"\n\tv-on:after-enter=\"afterEnter\"\n\tv-on:enter-cancelled=\"enterCancelled\"\n\tv-on:before-leave=\"beforeLeave\"\n\tv-on:leave=\"leave\"\n\tv-on:after-leave=\"afterLeave\"\n\tv-on:leave-cancelled=\"leaveCancelled\"\n&gt\n&lt!-- ... --&gt\n&lt/transition&gt\n\n\n// ...\nmethods: {\n  // --------\n  // 进入中\n  // --------\n  beforeEnter: function (el) {\n    // ...\n  },\n  // 此回调函数是可选项的设置\n  // 与 CSS 结合时使用\n  enter: function (el, done) {\n    // ...\n    done()\n  },\n  afterEnter: function (el) {\n    // ...\n  },\n  enterCancelled: function (el) {\n    // ...\n  },\n  // --------\n  // 离开时\n  // --------\n  beforeLeave: function (el) {\n    // ...\n  },\n  // 此回调函数是可选项的设置\n  // 与 CSS 结合时使用\n  leave: function (el, done) {\n    // ...\n    done()\n  },\n  afterLeave: function (el) {\n    // ...\n  },\n  // leaveCancelled 只用于 v-show 中\n  leaveCancelled: function (el) {\n    // ...\n  }\n}\n\t</textarea>\n\t<p>这些钩子函数可以结合 CSS transitions/animations 使用，也可以单独使用。</p>\n\t<p>当只用 JavaScript 过渡的时候， 在 enter 和 leave 中，回调函数 done 是必须的 。 否则，它们会被同步调用，过渡会立即完成。</p>\n\t<p>推荐对于仅使用 JavaScript 过渡的元素添加 v-bind:css=\"false\"，Vue 会跳过 CSS 的检测。这也可以避免过渡过程中 CSS 的影响。</p>\n\t<h3>一个使用Velocity.js的案例</h3>\n\t<div id=\"demo5\">\n\t\t<button @click=\"show=!show\">Toggle</button>\n\t\t<transition\n\t\t\tv-on:before-enter=\"beforeEnter\"\n\t\t\tv-on:enter=\"enter\"\n\t\t\tv-on:leave=\"leave\"\n\t\t\tv-bind:css=\"false\"\n\t\t>\n\t\t\t<p v-if=\"show\">Demo</p>\n\t\t</transition>\n\t</div>\n\t<h2>初始渲染的过渡</h2>\n\t<hr>\n\t<p>可以通过appear特性设置节点的初始渲染的过渡</p>\n\t<textarea name=\"\" id=\"\" cols=\"80\" rows=\"10\">\n<transition\n  appear\n  appear-class=\"custom-appear-class\"\n  appear-active-class=\"custom-appear-active-class\"\n>\n  <!-- ... -->\n</transition>\n\t</textarea>\n\t<p>自定义JavaScript钩子</p>\n\t<textarea name=\"\" id=\"\" cols=\"80\" rows=\"10\">\n<transition\n  appear\n  v-on:before-appear=\"customBeforeAppearHook\"\n  v-on:appear=\"customAppearHook\"\n  v-on:after-appear=\"customAfterAppearHook\"\n>\n  <!-- ... -->\n</transition>\n\t</textarea>\n\n\t<h2>多个元素过渡</h2>\n\t<hr>\n\t<p>当有相同标签名的元素切换时，需要通过 key 特性设置唯一的值来标记以让 Vue 区分它们，否则 Vue 为了效率只会替换相同标签内部的内容。即使在技术上没有必要，给在 &lttransition&gt 组件中的多个元素设置 key 是一个更好的实践。</p>\n\t<textarea name=\"\" id=\"\" cols=\"80\" rows=\"30\">\n<transition>\n  <button v-if=\"isEditing\" key=\"save\">\n    Save\n  </button>\n  <button v-else key=\"edit\">\n    Edit\n  </button>\n</transition>\n可以给通过同一个元素的key特性设置不同的状态来代替v-if和v-else，可重写为\n<transition>\n  <button v-bind:key=\"isEditing\">\n    {{ isEditing ? 'Save' : 'Edit' }}\n  </button>\n</transition>\n使用多个 v-if 的多个元素的过渡可以重写为绑定了动态属性的单个元素过渡。\n<transition>\n  <button v-if=\"docState === 'saved'\" key=\"saved\">\n    Edit\n  </button>\n  <button v-if=\"docState === 'edited'\" key=\"edited\">\n    Save\n  </button>\n  <button v-if=\"docState === 'editing'\" key=\"editing\">\n    Cancel\n  </button>\n</transition>\n重写为\n<transition>\n  <button v-bind:key=\"docState\">\n    {{ buttonMessage }}\n  </button>\n</transition>\n<script type=\"text/javascript\">\n\t// ...\ncomputed: {\n  buttonMessage: function () {\n    switch (docState) {\n      case 'saved': return 'Edit'\n      case 'edited': return 'Save'\n      case 'editing': return 'Cancel'\n    }\n  }\n}\n</script>\n\t</textarea>\n\t<h3>过渡模式</h3>\n\t<p>&lttransition&gt中当前元素的离开过渡和新元素的进入过渡是同时发生的，这不能满足所有的要求，Vue提供了过渡模式</p>\n\t<dl>\n\t\t<dt>in-out:</dt>\n\t\t<dd>新元素先进行过渡，完成之后当前元素过渡离开</dd>\n\t\t<dt>out-in：</dt>\n\t\t<dd>当前元素先进行过渡，完成之后新元素过渡进入</dd>\n\t</dl>\t\n\t<textarea name=\"\" id=\"\" cols=\"80\" rows=\"10\">\n<transition name=\"fade\" mode=\"out-in\">\n  <!-- ... the buttons ... -->\n</transition>\n\t</textarea>\n\t<p>多个组件的过渡很简单很多 - 我们不需要使用 key 特性。相反，我们只需要使用动态组件:</p>\n\t<div id=\"demo6\">\n\t<input v-model=\"view\" type=\"radio\" value=\"v-a\" id=\"a\" name=\"view\"><label for=\"a\">A</label>\n  \t<input v-model=\"view\" type=\"radio\" value=\"v-b\" id=\"b\" name=\"view\"><label for=\"b\">B</label>\n\t\t<transition name=\"component-fade\" mode=\"out-in\">\n\t\t\t<component :is=\"view\"></component>\n\t\t</transition>\n\t</div>\n\t<h2>列表过渡</h2>\n\t<hr>\n\t<p>要同时渲染整个列表，使用<transition-group>组件，它有两个特点：</p>\n\t<ul>\n\t\t<li>不同于 <transition>， 它会以一个真实元素呈现：默认为一个 <span>。你也可以通过 tag 特性更换为其他元素。</li>\n\t\t<li>元素 一定需要 指定唯一的 key 特性值</li>\n\t</ul>\n\t<div id=\"demo7\" class=\"demo\">\n\t\t<button @click=\"add\">Add</button>\n\t\t<button @click=\"remove\">Remove</button>\n\t\t<transition-group name=\"list\" tag=\"p\">\n\t\t<span v-for=\"item in items\" :key=\"item\" class=\"list-item\">\n\t\t\t{{item}}\n\t\t</span>\n\t\t</transition-group>\n\t</div>\n\t<h3>列表的位移过渡</h3>\n\t<p><transition-group> 组件还有一个特殊之处。不仅可以进入和离开动画，还可以改变定位。要使用这个新功能只需了解新增的 v-move 特性，它会在元素的改变定位的过程中应用。像之前的类名一样，可以通过 name 属性来自定义前缀，也可以通过 move-class 属性手动设置。</p>\n\t<div id=\"demo8\">\n\t\t<button @click=\"shuffle\">Shuffle</button>\n\t\t<transition-group name=\"flip-list\" tag=\"ul\">\n\t\t\t<li v-for=\"item in items\" :key=\"item\">{{item}}</li>\n\t\t</transition-group>\n\t</div>\n\t<p>内部的实现，Vue 使用了一个叫 FLIP 简单的动画队列\n使用 transforms 将元素从之前的位置平滑过渡新的位置。</p>\n\t<p>需要注意的是使用 FLIP 过渡的元素不能设置为 display: inline 。作为替代方案，可以设置为 display: inline-block 或者放置于 flex 中</p>\n\n\t<h3>列表的渐进过渡</h3>\n\t<div id=\"demo9\">\n\t\t<input type=\"text\" v-model=\"query\">\n\t\t<transition-group\n\t\t  name=\"staggered-fade\"\n\t\t  tag=\"ul\"\n\t\t  :css=\"false\"\n\t\t  @before-enter=\"beforeEnter\"\n\t\t  @enter=\"enter\"\n\t\t  @leave=\"leave\"\n\t\t>\n\t\t\t<li\n\t\t\t  v-for=\"(item,index) in computedList\"\n\t\t\t  :key=\"item.msg\"\n\t\t\t  :data-index=\"index\"\n\t\t\t>{{item.msg}}</li>\n\t\t</transition-group>\n\t</div>\n</body>\n<script type=\"text/javascript\" src=\"Scripts/vue.js\"></script>\n<script src=\"https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.min.js\"></script>\n<script src=\"https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.14.1/lodash.min.js\"></script>\n<link href=\"https://unpkg.com/animate.css@3.5.1/animate.min.css\" rel=\"stylesheet\" type=\"text/css\">\n<script>\n\tvar vm1=new Vue({\n\t\tel:\"#demo\",\n\t\tdata:{show:true}\n\t})\n\n\tvar vm2=new Vue({\n\t\tel:\"#demo2\",\n\t\tdata:{show:true}\n\t})\n\n\tvar vm3=new Vue({\n\t\tel:\"#demo3\",\n\t\tdata:{show:true}\n\t})\n\n\tvar vm4=new Vue({el:\"#demo4\",data:{show:true}});\n\n\tvar vm5=new Vue({\n\t\tel:\"#demo5\",\n\t\tdata:{show:true},\n\t\tmethods:{\n\t\t\tbeforeEnter:function(el){\n\t\t\t\tel.style.opacity = 0\n\t\t\t\tel.style.transformOrigin='left'\n\t\t\t},\n\t\t\tenter:function(el,done){\n\t\t\t\tVelocity(el,{opacity:1,fontSize:'1.4em'},{duration:300})\n\t\t\t},\n\t\t\tleave:function(el,done){\n\t\t\t\tVelocity(el,{translateX:'15px',rotateZ:'50deg'},{duration:600})\n\t\t\t\tVelocity(el,{rotateZ:'100deg'},{loop:2})\n\t\t\t\tVelocity(el,{\n\t\t\t\t\trotateZ:'45deg',\n\t\t\t\t\ttranslateX:'30px',\n\t\t\t\t\ttranslateY:'30px',\n\t\t\t\t\topacity:0\n\t\t\t\t},{\n\t\t\t\t\tcomplete:done\n\t\t\t\t})\n\t\t\t}\n\t\t}\n\t});\n\n\tvar vm6=new Vue({\n\t\tel:\"#demo6\",\n\t\tdata:{\n\t\t\tview:'v-a'\n\t\t},\n\t\tcomponents:{\n\t\t\t'v-a':{\n\t\t\t\ttemplate:'<div>Component A</div>'\n\t\t\t},\n\t\t\t'v-b':{\n\t\t\t\ttemplate:'<div>Component B</div>'\n\t\t\t}\n\t\t}\n\t});\n\n\tvar vm7=new Vue({\n\t\tel:\"#demo7\",\n\t\tdata:{\n\t\t\titems:[1,2,3,4,5,6,7,8,9],\n\t\t\tnextNum:10\n\t\t},\n\t\tmethods:{\n\t\t\trandomIndex:function(){\n\t\t\t\treturn Math.floor(Math.random()*this.items.length)\n\t\t\t},\n\t\t\tadd:function(){\n\t\t\t\tthis.items.splice(this.randomIndex(),0,this.nextNum++)\n\t\t\t},\n\t\t\tremove:function(){\n\t\t\t\tthis.items.splice(this.randomIndex(),1)\n\t\t\t}\n\t\t}\n\t});\n\n\tvar vm8=new Vue({\n\t\tel:\"#demo8\",\n\t\tdata:{\n\t\t\titems:[1,2,3,4,5,6,7,8,9]\n\t\t},\n\t\tmethods:{\n\t\t\tshuffle:function(){\n\t\t\t\tthis.items = _.shuffle(this.items)\n\t\t\t}\n\t\t}\n\t});\n\n\tvar vm9=new Vue({\n\t\tel:\"#demo9\",\n\t\tdata:{\n\t\t\tquery:\"\",\n\t\t\tlist:[\n\t\t\t\t{ msg: 'Bruce Lee' },\n      \t\t\t{ msg: 'Jackie Chan' },\n      \t\t\t{ msg: 'Chuck Norris' },\n      \t\t\t{ msg: 'Jet Li' },\n      \t\t\t{ msg: 'Kung Fury' }\n\t\t\t]\n\t\t},\n\t\tcomputed:{\n\t\t\tcomputedList:function(){\n\t\t\t\tvar vm=this;\n\t\t\t\treturn this.list.fliter(function(item){\n\t\t\t\t\treturn item.msg.toLowerCase().indexOf(vm.query.toLowerCase()) !== -1\n\t\t\t\t})\n\t\t\t}\n\t\t},\n\t\tmethods:{\n\t\t\tbeforeEnter:function(el){\n\t\t\t\tel.style.opacity=0\n\t\t\t\tel.style.height=0\n\t\t\t},\n\t\t\tenter:function(el,done){\n\t\t\t\tvar delay = el.dataset.index * 150\n      \t\t\tsetTimeout(function () {\n        \t\t\tVelocity(\n          \t\t\t\tel,\n          \t\t\t\t{ opacity: 1, height: '1.6em' },\n          \t\t\t\t{ complete: done }\n        \t\t\t)\n      \t\t\t}, delay)\n\t\t\t},\n\t\t\tleave:function(el,done){\n\t\t\t\t\n\t\t\t}\n\t\t}\n\t})\n</script>\n<style type=\"text/css\">\n\t.fade-enter-active,.fade-leave-active{\n\t\ttransition: opacity .5s\n\t}\n\t.fade-enter,.fade-leave-active{\n\t\topacity: 0\n\t}\n\t\n\t.slide-fade-enter-active{\n\t\ttransition: all .3s ease;\n\t}\n\t.slide-fade-leave-active{\n\t\ttransition: all .8s cubic-bezier(1.0,0.5,0.8,1.0);\n\t}\n\t.slide-fade-enter,.slide-fade-leave-active{\n\t\ttransform: translateX(10px);\n\t\topacity: 0;\n\t}\n\n\t.bounce-enter-active{\n\t\tanimation: bounce-in .5s;\n\t}\n\t.bounce-leave-active{\n\t\tanimation: bounce-out .5s;\n\t}\n\t@keyframes bounce-in{\n\t\t0% {\n\t\t\ttransform: scale(0);\n\t\t}\n\t\t50% {\n\t\t\ttransform: scale(1.5);\n\t\t}\n\t\t100% {\n\t\t\ttransform: scale(1);\n\t\t}\n\t}\n\t@keyframes bounce-out{\n\t\t0% {\n\t\t\ttransform: scale(1);\n\t\t}\n\t\t50% {\n\t\t\ttransform: scale(1.5);\n\t\t}\n\t\t100% {\n\t\t\ttransform: scale(0);\n\t\t}\n\t}\n\n\t.component-fade-enter-active, .component-fade-leave-active {\n\t\ttransition: opacity .3s ease;\n\t}\n\t.component-fade-enter, .component-fade-leave-active {\n\t\topacity: 0;\n\t}\n\n\t.list-item{\t\t\n\t\tdisplay:inline-block;\n\t\tmargin-right: 10px;\n\t}\n\t.list-enter-active,.list-leave-active{\n\t\ttransition:all 1s;\n\t}\n\t.list-enter,.list-leave-active{\n\t\topacity: 0;\n\t\ttransform: translateY(30px);\n\t}\n\n\t.flip-list-move{\n\t\ttransition: transform 1s;\n\t}\n</style>\n</html>",
 			"file": "TransitionEffect.html",
+			"file_size": 14926,
+			"file_write_time": 131284013296317556,
 			"settings":
 			{
-				"buffer_size": 4012,
+				"buffer_size": 11912,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -172,7 +215,7 @@
 	},
 	"expanded_folders":
 	[
-		"/E/workspace/LearningVue"
+		"/E/workspace/电子书/Notes/LearningVue"
 	],
 	"file_history":
 	[
@@ -253,7 +296,8 @@
 						],
 						"settings":
 						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax"
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -296,23 +340,24 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4012,
+						"buffer_size": 11912,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3002,
-								3002
+								10681,
+								10681
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax"
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1920.0,
+						"translation.y": 9274.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,

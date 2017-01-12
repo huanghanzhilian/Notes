@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<h1>过渡状态</h1>
+	<p>Vue 的过渡系统提供了非常多简单的方法设置进入、离开和列表的动效。那么对于数据元素本身的动效呢，比如：</p>
+	<ul>
+		<li>数字和运算</li>
+		<li>颜色的显示</li>
+		<li>SVG节点的位置</li>
+		<li>元素的大小和其他属性</li>
+	</ul>
+	<h2>状态动画与watcher</h2>
+	<hr>
+	<p>通过 watcher 我们能监听到任何数值属性的数值更新，数值更新时，就会触发动画。</p>
+	<div id="demo1">
+		<input type="number" v-model="number" step="20">
+		<p>{{animatedNumber}}</p>
+	</div>
+</body>
+<script type="text/javascript" src="Scripts/vue.js"></script>
+<script src="https://unpkg.com/tween.js@16.3.4"></script>
+<script>
+	var vm1=new Vue({
+		el:"demo1",
+		data:{
+			number:0,
+			animatedNumber:0
+		},
+		watcher:{
+			number:function(newValue,oldValue){
+				var vm=this;
+				function animate(time){
+					requestAnimationFrame(animate)
+        			TWEEN.update(time)
+				}
+				new TWEEN.Tween({ tweeningNumber: oldValue })
+        		.easing(TWEEN.Easing.Quadratic.Out)
+        		.to({ tweeningNumber: newValue }, 500)
+        		.onUpdate(function () {
+          			vm.animatedNumber = this.tweeningNumber.toFixed(0)
+        		})
+        		.start()
+        		animate();
+			}
+		}
+	})
+</script>
+</html>
