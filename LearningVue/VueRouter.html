@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>VueRouter</title>
+</head>
+<body>
+<div id="demo1">
+    <h1>Hello App!</h1>
+    <p>
+        <!-- 使用 router-link 组件来导航. -->
+        <!-- 通过传入 `to` 属性指定链接. -->
+        <!-- <router-link> 默认会被渲染成一个 `<a>` 标签 -->
+        <router-link to="/foo">Go to Foo</router-link>
+        <router-link to="/bar">Go to Bar</router-link>
+        <router-link to="/user/2">Show User2</router-link>
+        <router-link to="/user/1/profile">Show User1</router-link>
+        <router-link to="/user/3/posts">Show User3</router-link>
+    </p>
+    <!-- 路由出口 -->
+    <!-- 路由匹配到的组件将渲染在这里 -->
+    <router-view></router-view>
+</div>
+
+</body>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+<script>
+    const Foo = {template: '<div>foo</div>'};
+    const Bar = {template: '<div>bar</div>'};
+    const User = {template: '<div><h2>User {{$route.params.id}}</h2><router-view></router-view></router-view></div>'}
+    const routes = [
+        {path: '/foo', component: Foo},
+        {path: '/bar', component: Bar},
+        {
+            path: '/user/:id', component: User,
+            children: [
+                {path: 'profile', component: Foo},
+                {path: 'posts', component: Bar}
+            ]
+        }
+    ];
+    const router = new VueRouter({
+        routes // （缩写）相当于 routes: routes
+    });
+    var vm1 = new Vue({
+        el: "#demo1",
+        router
+    })
+</script>
+</html>
